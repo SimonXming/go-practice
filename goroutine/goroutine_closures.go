@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
 	goroutine_closures_1()
@@ -27,6 +30,7 @@ func goroutine_closures_1() {
 
 }
 
+// goroutine 的执行时机是不确定的
 func goroutine_closures_2() {
 	done := make(chan bool)
 
@@ -36,8 +40,10 @@ func goroutine_closures_2() {
 			fmt.Println(v)
 			done <- true
 		}()
+		// time.Sleep(time.Millisecond)
 	}
 	fmt.Println("out of loop")
+	time.Sleep(time.Millisecond)
 
 	// wait for all goroutines to complete before exiting
 	for _ = range values {
